@@ -21,7 +21,7 @@ COPY --from=build-env /app/out .
 COPY wait-for-it.sh /bin
 RUN chmod +x /bin/wait-for-it.sh
 
-COPY UserApi.pfx /root/pne.ast/https/
+COPY UserApi.pfx /root/.aspnet/https/
 
 # wait to sql server port to be available before starting the app
 CMD ["./../bin/wait-for-it.sh", "ms-sql-server:1433", "--", "dotnet", "UserApi.dll"]
