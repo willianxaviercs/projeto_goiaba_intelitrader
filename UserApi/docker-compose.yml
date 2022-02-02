@@ -1,0 +1,22 @@
+version: '3'
+services:
+  ms-sql-server:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Pa55w0rd1234"
+      MS_SQL_PID: Express
+    ports:
+      - "1433:1433"
+  user-api:
+    depends_on:
+      - ms-sql-server
+    build: .
+    environment:
+      ASPNETCORE_URLS: "https://+;http://+"
+      ASPNETCORE_HTTPS_PORT: 8001
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_Kestrel__Certificates__Development__Password: "pa55w0rd1234"
+    ports:
+      - "8000:80"
+      - "8001:443"
