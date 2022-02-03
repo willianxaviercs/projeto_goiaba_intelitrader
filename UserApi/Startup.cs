@@ -28,15 +28,9 @@ namespace UserApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var Server = Configuration["DBServer"] ?? "ms-sql-server";
-            var Port = Configuration["DBPort"] ?? "1433"; // default database port
-            var User = Configuration["DBUser"] ?? "SA";  // NOTE: system admin just for testing
-            var Password = Configuration["DBPassword"] ?? "Pa55w0rd1234";
-            var Database = Configuration["Database"] ?? "Users";
+            string DbConnectionString = "Host=postgres-server;Port=5432;Database=booksdb;Username=postgres;Password=Pa55w0rd1234";
 
-            string DbConnectionString = $"Server={Server},{Port};Initial Catalog={Database};User ID={User};Password={Password}";
-
-            services.AddDbContext<UserDbContext>(opt => opt.UseSqlServer(DbConnectionString));
+            services.AddDbContext<UserDbContext>(opt => opt.UseNpgsql(DbConnectionString));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
