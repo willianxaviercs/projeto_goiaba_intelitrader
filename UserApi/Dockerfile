@@ -1,5 +1,5 @@
 # Get dotnet sdk
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-focal AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 WORKDIR /app
 
 # Copy CSPROJ and restore any dependencies
@@ -11,7 +11,7 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 
 # Generate runtime image
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-focal
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
