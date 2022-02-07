@@ -14,7 +14,7 @@ services:
       ASPNETCORE_URLS: "https://+;http://+"
       ASPNETCORE_HTTPS_PORT: 8001
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_Kestrel__Certificates__Development__Password: "pa55w0rd1234"
+      ASPNETCORE_Kestrel__Certificates__Development__Password: "Pa55w0rd1234"
     ports:
       - "8000:80"
       - "8001:443"
