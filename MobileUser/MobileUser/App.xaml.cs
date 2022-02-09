@@ -13,40 +13,40 @@ namespace MobileUser
         {
             InitializeComponent();
 
-            string apiBaseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "https://10.0.2.2" : "https://localhost";
-            string apiHttpsPort = "8001";
-            string apiRoute = "users";
+            string BaseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "https://10.0.2.2" : "https://localhost";
+            string HttpsPort = "8001";
+            string Route = "users";
             
-            string apiUrl = $"{apiBaseAddress}:{apiHttpsPort}/{apiRoute}";
+            string ApiUrl = $"{BaseAddress}:{HttpsPort}/{Route}";
 
-            HttpClient httpClient = GetHttpClient();
+            HttpClient HttpClient = GetHttpClient();
 
-            MainPage = new MainPage(httpClient, apiUrl);
+            MainPage = new MainPage(HttpClient, ApiUrl);
         }
 
         public HttpClient GetHttpClient()
         {
-            HttpClientHandler insecureHandler = GetInsecureHandler();
+            HttpClientHandler InsecureHandler = GetInsecureHandler();
 
-            HttpClient client = new HttpClient(insecureHandler);
+            HttpClient Client = new HttpClient(InsecureHandler);
 
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            Client.DefaultRequestHeaders.Add("Accept", "application/json");
 
-            return client;
+            return Client;
         }
         
         // bypass used only for development purposes,
         // mobile dont permit self signed certificates
         public HttpClientHandler GetInsecureHandler()
         {
-            HttpClientHandler handler = new HttpClientHandler();
-            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+            HttpClientHandler Handler = new HttpClientHandler();
+            Handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
             {
                 if (cert.Issuer.Equals("CN=localhost"))
                     return true;
                 return errors == System.Net.Security.SslPolicyErrors.None;
             };
-            return handler;
+            return Handler;
         }
 
         protected override void OnStart()

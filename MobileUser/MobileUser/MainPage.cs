@@ -13,57 +13,57 @@ public class MainPage : ContentPage
     Entry SurName;
     DatePicker AgePicker;
 
-    HttpClient _client;
-    static string _apiUrl;
-    User user;
+    HttpClient HttpClient;
+    static string ApiUrl;
+    User User;
 
     public MainPage(HttpClient httpClient, string apiUrl)
     {
-        _client = httpClient;
-        _apiUrl = apiUrl;
+        HttpClient = httpClient;
+        ApiUrl = apiUrl;
 
-        user = new User();
+        User = new User();
 
         this.Padding = new Thickness(20, 20, 20, 20);
         this.BackgroundColor = Color.FromHex("#eeeeee");
 
-        StackLayout panel = new StackLayout
+        StackLayout Panel = new StackLayout
         {
             Spacing = 15,
         };
 
-        panel.Children.Add(new Label {
+        Panel.Children.Add(new Label {
             Text = "SIGN UP",
             HorizontalOptions = LayoutOptions.CenterAndExpand,
             TextColor = Color.FromHex("#4287f5"),
             FontSize = 20
             });
 
-        panel.Children.Add(FirstName = new Entry {
+        Panel.Children.Add(FirstName = new Entry {
             Placeholder = "Firstname",
         });
 
-        panel.Children.Add(SurName = new Entry {
+        Panel.Children.Add(SurName = new Entry {
             Placeholder = "Surname",
         });
 
-        panel.Children.Add(new Label {
+        Panel.Children.Add(new Label {
             Text = "Birthdate:",
         });
 
-        panel.Children.Add(AgePicker = new DatePicker
+        Panel.Children.Add(AgePicker = new DatePicker
         {
             MaximumDate = DateTime.Now,
         });
 
-        panel.Children.Add(CreateButton = new Button {
+        Panel.Children.Add(CreateButton = new Button {
             Text = "CREATE USER",
             TextColor = Color.FromHex("#eeeeee"),
             BackgroundColor = Color.FromHex("#4287f5"),
         });
 
         // debug only
-        panel.Children.Add(ResponseField = new Label {
+        Panel.Children.Add(ResponseField = new Label {
             Text = "Response",
             FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
         });
@@ -71,18 +71,18 @@ public class MainPage : ContentPage
         // STUDY: operator overload ?? 
         CreateButton.Clicked += OnCreateBtn;
 
-        this.Content = panel;
+        this.Content = Panel;
     }
 
     // validate input fields
     bool InputIsValid()
     {
-        bool result = true;
+        bool Result = true;
 
         // firstname required
         if (string.IsNullOrWhiteSpace(FirstName.Text))
         {
-            result = false;
+            Result = false;
         }
         
         // surname not required
@@ -95,41 +95,41 @@ public class MainPage : ContentPage
         }
 
         // age required greater than 0, less then 129
-        int age = CalculateAge(DateTime.Now, AgePicker.Date);
-        if (age == 0)
+        int Age = CalculateAge(DateTime.Now, AgePicker.Date);
+        if (Age == 0)
         {
-            result = false;
+            Result = false;
         }
 
-        return result;
+        return Result;
     }
 
-    int CalculateAge(DateTime now, DateTime birthdate)
+    int CalculateAge(DateTime now, DateTime birthDate)
     {
-        int age = 0;
+        int Age = 0;
 
         // age relative to year
-        int relativeAge = now.Year - birthdate.Year;
+        int RelativeAge = now.Year - birthDate.Year;
 
-        if (relativeAge > 0)
+        if (RelativeAge > 0)
         {
-            age += (relativeAge - 1);
+            Age += (RelativeAge - 1);
             
             // made anniversary
-            if (now.Month > birthdate.Month)
+            if (now.Month > birthDate.Month)
             {
-                age += 1;
+                Age += 1;
             }
-            else if (now.Month == birthdate.Month)
+            else if (now.Month == birthDate.Month)
             {
-                if (birthdate.Day >= now.Day)
+                if (birthDate.Day >= now.Day)
                 {
                     // made anniversary
-                    age += 1;
+                    Age += 1;
                 }
             }
         }
-        return age;      
+        return Age;
     }
 
     async void OnCreateBtn(object sender, EventArgs e)
@@ -155,17 +155,18 @@ public class MainPage : ContentPage
 
         // STUDY: HttpRequestException, TaskCanceledException
 
-        user.FirstName = FirstName.Text;
-        user.SurName = SurName.Text;
-        user.Age = CalculateAge(DateTime.Now, AgePicker.Date);
+        User.FirstName = FirstName.Text;
+        User.SurName = SurName.Text;
+        User.Age = CalculateAge(DateTime.Now, AgePicker.Date);
+        User.Age = -1;
 
-        StringContent jsonContent = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+        StringContent SerializedData = new StringContent(JsonConvert.SerializeObject(User), Encoding.UTF8, "application/json");
 
-        var response = await _client.PostAsync(_apiUrl, jsonContent);
+        var Response = await HttpClient.PostAsync(ApiUrl, SerializedData);
 
-        string responseStr = await response.Content.ReadAsStringAsync();
+        string ResponseStr = await Response.Content.ReadAsStringAsync();
 
-        ResponseField.Text = responseStr;
+        ResponseField.Text = ResponseStr;
 
     }
 
