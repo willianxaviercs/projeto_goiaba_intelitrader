@@ -2,7 +2,7 @@ using System;
 
 namespace MobileUser
 {
-public class User
+    public class User
     {
         public string FirstName  { get; set; }
         

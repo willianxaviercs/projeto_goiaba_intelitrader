@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileUser.MainPage">
+
+    <StackLayout x:Name="Layout" Padding="10">
+        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
+            <Label Text="Sign Up" HorizontalTextAlignment="Center" TextColor="White" FontSize="28"/>
+        </Frame>
+
+        <Label x:Name="FirstNameLabel" Text="Name Required" FontSize="12" TextColor="Red"/>
+        <Entry x:Name="FirstNameText" Placeholder="Enter your firstname" TextChanged="NameTextChanged"/>
+
+        <Entry x:Name="SurNameText" Placeholder="Enter your surname"/>
+
+        <Label x:Name="AgeLabel" Text="Age Required" FontSize="12" TextColor="Red"/>
+        <Entry x:Name="AgeText" Placeholder="Enter your age" Keyboard="Numeric" TextChanged="AgeTextChanged"/>
+
+        <Button x:Name="CreateButton" Text="CREATE USER" TextColor="White" BackgroundColor="#2196F3" Clicked="CreateButtonClicked" IsEnabled="false"/>
+    </StackLayout>
+
+</ContentPage>

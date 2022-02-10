@@ -9,6 +9,10 @@ namespace MobileUser
 {
     public partial class App : Application
     {
+        public readonly HttpClient HttpClient;
+        public readonly string ApiUrl;
+        public User DisplayUser;
+
         public App()
         {
             InitializeComponent();
@@ -17,9 +21,9 @@ namespace MobileUser
             string HttpsPort = "8001";
             string Route = "users";
             
-            string ApiUrl = $"{BaseAddress}:{HttpsPort}/{Route}";
+            ApiUrl = $"{BaseAddress}:{HttpsPort}/{Route}";
 
-            HttpClient HttpClient = GetHttpClient();
+            HttpClient = GetHttpClient();
 
             MainPage = new MainPage(HttpClient, ApiUrl);
         }
