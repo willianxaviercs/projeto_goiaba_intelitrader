@@ -48,10 +48,6 @@ namespace UserApi.Controllers
         [HttpPost]
         public ActionResult<User> CreateUser(User user)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             _context.UserItems.Add(user);
             _context.SaveChanges();
 
@@ -59,7 +55,7 @@ namespace UserApi.Controllers
             string LogInfo = $"User {user.Id} created at {user.CreationTime}";
             _logger.LogInformation(LogInfo);
 
-            return CreatedAtAction(nameof(GetUserById), new {Id = user.Id}, user);
+            return CreatedAtAction(nameof(GetUserById), user, user);
         }
 
         // PUT: /users/id -> Updates an existing user
