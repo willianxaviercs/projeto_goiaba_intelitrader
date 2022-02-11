@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileUser.DisplayPage">
+
+    <StackLayout x:Name="Layout" Padding="10">
+        <Frame BackgroundColor="#1ec731" Padding="24" CornerRadius="0">
+            <Label Text="User Created!" HorizontalTextAlignment="Center" TextColor="White" FontSize="28"/>
+        </Frame>
+
+        <Label x:Name="NameLabel" Text="Name"/>
+        <Label x:Name="NameDisplay" FontSize="20" TextColor="Black" Padding="10"/>
+        
+        <Label x:Name="AgeLabel" Text="Age"/>
+        <Label x:Name="AgeDisplay"  FontSize="20" TextColor="Black" Padding="10"/>
+
+        
+        <Label x:Name="IdLabel" Text="ID"/>
+        <Label x:Name="IdDisplay"  FontSize="20" TextColor="Black" Padding="10"/>
+
+        
+        <Label x:Name="DateLabel" Text="Date"/>
+        <Label x:Name="DateDisplay"  FontSize="20" TextColor="Black" Padding="10"/>
+
+    </StackLayout>
+
+</ContentPage>
